@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalya Cahyani Salsabilah - Feminine & Interactive Badminton Blog</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        blush: {
+                            50: '#fff5f7',
+                            100: '#ffe3e8',
+                            200: '#ffc9d4',
+                            300: '#ffa1b5',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                        },
+                        pastel: {
+                            lavender: '#eee9fe',
+                            pink: '#fce7f3',
+                            mint: '#d1fae5',
+                            cream: '#fffbeb'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft-3d': '0 10px 30px -5px rgba(56, 189, 248, 0.2), 0 8px 15px -6px rgba(251, 113, 133, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.9)',
+                        'soft-3d-hover': '0 20px 40px -10px rgba(56, 189, 248, 0.35), 0 12px 20px -8px rgba(251, 113, 133, 0.25), inset 0 2px 0 rgba(255, 255, 255, 1)',
+                        'pink-glow': '0 10px 25px -5px rgba(251, 113, 133, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.8)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Vanilla Tilt JS for 3D interactive cards -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffe3e8 40%, #eee9fe 75%, #f0f9ff 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Pure CSS Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Floating 3D Animations */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(5deg); }
+        }
+
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-12px) scale(1.03); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.35; filter: blur(25px); }
+            50% { opacity: 0.65; filter: blur(35px); }
+        }
+
+        .animate-float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        .animate-float-soft { animation: floatSoft 5s ease-in-out infinite; }
+        .animate-glow { animation: pulseGlow 6s ease-in-out infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0f9ff; }
+        ::-webkit-scrollbar-thumb { background: #ffa1b5; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fb7185; }
+
+        /* Blinking Cursor */
+        .cursor-blink { animation: blink 0.8s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="text-slate-700 min-h-screen relative selection:bg-blush-200 selection:text-blush-500">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-300 via-blush-300 to-blush-400 flex items-center justify-center text-white shadow-pink-glow group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-heart text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="heading-font text-2xl font-bold bg-gradient-to-r from-sky-600 via-blush-400 to-blush-500 bg-clip-text text-transparent">Kalya Cahyani</span>
+                        <span class="block text-[10px] font-semibold text-blush-400 tracking-widest uppercase -mt-1">Personal Aesthetic Blog</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-2">
+                    <a href="#hero" class="px-4 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-blush-500 hover:bg-blush-50/80 transition-all duration-200">Beranda</a>
+                    <a href="#about" class="px-4 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-blush-500 hover:bg-blush-50/80 transition-all duration-200">Tentang Kalya</a>
+                    <a href="#reasons" class="px-4 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-blush-500 hover:bg-blush-50/80 transition-all duration-200">Manfaat Badminton</a>
+                    <a href="#blog" class="px-4 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-blush-500 hover:bg-blush-50/80 transition-all duration-200">Artikel</a>
+                    <a href="#game" class="px-4 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-blush-500 hover:bg-blush-50/80 transition-all duration-200">Mini Game 3D</a>
+                    
+                    <!-- Instagram Direct Link Button -->
+                    <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="ml-3 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-sky-400 via-blush-300 to-blush-400 shadow-soft-3d hover:shadow-soft-3d-hover hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-brands fa-instagram text-sm"></i> @kaly4a4
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Toggle Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2.5 rounded-2xl text-blush-400 hover:bg-blush-50 focus:outline-none transition-colors" aria-label="Toggle Mobile Menu">
+                        <i class="fa-solid fa-bars-staggered text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-b border-blush-100 px-4 pt-2 pb-6 space-y-2">
+            <a href="#hero" class="mobile-link block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-blush-50 hover:text-blush-500">Beranda</a>
+            <a href="#about" class="mobile-link block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-blush-50 hover:text-blush-500">Tentang Kalya</a>
+            <a href="#reasons" class="mobile-link block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-blush-50 hover:text-blush-500">Manfaat Badminton</a>
+            <a href="#blog" class="mobile-link block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-blush-50 hover:text-blush-500">Artikel Blog</a>
+            <a href="#game" class="mobile-link block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-blush-50 hover:text-blush-500">Mini Game 3D</a>
+            <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="mobile-link block px-4 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-sky-400 to-blush-400 text-center shadow-soft-3d">
+                <i class="fa-brands fa-instagram mr-1"></i> Follow Instagram @kaly4a4
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+        <!-- Floating Soft Pastel Background Glow Spheres -->
+        <div class="absolute top-16 left-10 w-80 h-80 bg-sky-300/30 rounded-full blur-3xl animate-glow pointer-events-none"></div>
+        <div class="absolute top-36 right-10 w-96 h-96 bg-blush-300/40 rounded-full blur-3xl animate-glow pointer-events-none" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-10 left-1/3 w-72 h-72 bg-pastel-lavender rounded-full blur-3xl animate-glow pointer-events-none" style="animation-delay: 4s;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-blush-200 shadow-soft-3d text-blush-500 text-xs font-bold tracking-wider uppercase">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blush-400 animate-ping"></span>
+                        <i class="fa-solid fa-sparkles"></i> Welcome to Kalya's Feminine Blog
+                    </div>
+
+                    <h1 class="heading-font text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight">
+                        Halo, Saya <br class="hidden sm:inline"/>
+                        <span class="bg-gradient-to-r from-sky-500 via-blush-400 to-blush-500 bg-clip-text text-transparent italic">Kalya Cahyani Salsabilah</span>
+                    </h1>
+
+                    <p class="text-base sm:text-xl font-medium text-slate-600 min-h-[3rem]">
+                        <span id="typewriter-text" class="text-sky-600 font-semibold"></span><span class="cursor-blink text-blush-400">|</span>
+                    </p>
+
+                    <p class="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Selamat datang di ruang favorit saya! Sebuah catatan tentang energi positif, keanggunan, gaya hidup sehat, dan semangat olahraga badminton.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-400 via-blush-300 to-blush-400 text-white font-bold text-sm shadow-soft-3d hover:shadow-soft-3d-hover hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                            <i class="fa-brands fa-instagram text-lg"></i> Follow Instagram @kaly4a4
+                        </a>
+                        <a href="#about" class="px-8 py-4 rounded-2xl glass-card text-sky-700 font-bold text-sm border border-sky-200 hover:bg-blush-50/50 shadow-soft-3d hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                            <i class="fa-solid fa-sparkles text-blush-400"></i> Cerita Hobi Badminton
+                        </a>
+                    </div>
+
+                    <!-- Feminine Badges Grid -->
+                    <div class="pt-6 grid grid-cols-3 gap-3 border-t border-blush-100/80 max-w-md mx-auto lg:mx-0">
+                        <div class="glass-card p-3 rounded-2xl text-center shadow-soft-3d">
+                            <div class="heading-font text-xl font-bold text-sky-500">Fun & Fit</div>
+                            <div class="text-[11px] font-semibold text-slate-500">Semangat Ceria</div>
+                        </div>
+                        <div class="glass-card p-3 rounded-2xl text-center shadow-soft-3d">
+                            <div class="heading-font text-xl font-bold text-blush-400">Badminton</div>
+                            <div class="text-[11px] font-semibold text-slate-500">Hobi Favorit</div>
+                        </div>
+                        <div class="glass-card p-3 rounded-2xl text-center shadow-soft-3d">
+                            <div class="heading-font text-xl font-bold text-purple-400">Ketangkasan</div>
+                            <div class="text-[11px] font-semibold text-slate-500">Refleks Aktif</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Pure CSS 3D Aesthetic Avatar Card (No Images) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-sm sm:max-w-md" data-tilt data-tilt-max="12" data-tilt-speed="400">
+                        
+                        <!-- Floating CSS Shuttlecock Badge -->
+                        <div class="absolute -top-8 -right-4 z-20 animate-float-slow pointer-events-none">
+                            <div class="w-16 h-16 glass-card rounded-2xl p-2 shadow-pink-glow flex items-center justify-center transform rotate-12">
+                                <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                                    <path d="M50,15 L32,60 L68,60 Z" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linejoin="round"/>
+                                    <path d="M36,50 L64,50 M39,40 L61,40 M42,30 L58,30" stroke="#bae6fd" stroke-width="3"/>
+                                    <circle cx="50" cy="74" r="13" fill="#fb7185"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Floating Racket Badge -->
+                        <div class="absolute -bottom-6 -left-4 z-20 animate-float-soft pointer-events-none">
+                            <div class="glass-card px-4 py-3 rounded-2xl shadow-soft-3d flex items-center gap-3 border border-blush-200">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-400 to-blush-300 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                                    <i class="fa-solid fa-ribbon"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-800">Kalya Cahyani</div>
+                                    <div class="text-[10px] font-semibold text-blush-400">@kaly4a4</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pure CSS Aesthetic Card Illustration -->
+                        <div class="glass-card p-8 rounded-3xl shadow-soft-3d border-2 border-white relative overflow-hidden bg-gradient-to-b from-white/90 via-blush-50/70 to-sky-50/80">
+                            
+                            <div class="relative z-10 text-center">
+                                <!-- Pure CSS Pastel Girl Illustration Vector -->
+                                <div class="relative w-44 h-44 sm:w-52 sm:h-52 mx-auto mb-6 rounded-full p-3 bg-gradient-to-tr from-sky-300 via-blush-200 to-blush-400 shadow-soft-3d flex items-center justify-center overflow-hidden">
+                                    <div class="w-full h-full rounded-full bg-gradient-to-b from-sky-100 to-blush-100 flex flex-col items-center justify-center relative">
+                                        <!-- Soft Decorative Wings / Racket SVG Background -->
+                                        <div class="absolute inset-0 opacity-20 flex items-center justify-center">
+                                            <i class="fa-solid fa-heart text-8xl text-blush-400"></i>
+                                        </div>
+                                        <!-- Minimalist Vector Monogram Avatar -->
+                                        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-blush-300 to-sky-300 flex items-center justify-center text-white font-bold text-3xl shadow-md border-2 border-white">
+                                            KCS
+                                        </div>
+                                        <span class="mt-2 heading-font text-sm font-bold text-slate-700">Kalya Cahyani</span>
+                                    </div>
+                                </div>
+
+                                <h3 class="heading-font text-2xl font-bold text-slate-800">Kalya Cahyani S.</h3>
+                                <p class="text-xs font-bold text-sky-500 mb-4 tracking-wider uppercase">Badminton Enthusiast</p>
+                                
+                                <div class="flex flex-wrap justify-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-sky-100 text-sky-700">#BadmintonJoy</span>
+                                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-blush-100 text-blush-500">#GayaHidupSehat</span>
+                                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-purple-100 text-purple-600">#Ketangkasan</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl shadow-soft-3d border border-white relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Left: CSS Pure Aesthetic Card -->
+                    <div class="lg:col-span-5">
+                        <div class="p-8 rounded-3xl bg-gradient-to-tr from-sky-100 via-blush-100 to-purple-100 shadow-soft-3d border border-white text-center relative overflow-hidden">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white text-blush-400 flex items-center justify-center text-3xl shadow-pink-glow">
+                                <i class="fa-solid fa-feather-pointed"></i>
+                            </div>
+                            <h3 class="heading-font text-2xl font-bold text-slate-800 mb-2">Hobi Badminton</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
+                                Aktivitas penuh energi yang memberikan keceriaan dan kebugaran di setiap momen.
+                            </p>
+
+                            <!-- Instagram Link Tag Badge -->
+                            <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 text-blush-500 text-xs font-bold shadow-sm hover:scale-105 transition-transform">
+                                <i class="fa-brands fa-instagram"></i> @kaly4a4
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Personal Reasons Content -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blush-100 text-blush-500 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-heart"></i> Cerita Dari Kalya
+                        </div>
+
+                        <h2 class="heading-font text-3xl sm:text-4xl font-bold text-slate-800 leading-snug">
+                            Mengapa Kalya Memilih Badminton?
+                        </h2>
+
+                        <!-- Highlight Quote Box -->
+                        <div class="p-6 rounded-2xl bg-gradient-to-r from-sky-100/60 via-blush-100/60 to-purple-100/60 border-l-4 border-blush-400 shadow-sm">
+                            <p class="text-slate-700 font-medium text-base sm:text-lg italic leading-relaxed">
+                                "Saya memilih badminton karena olahraga ini menyenangkan, bisa menjaga kesehatan, melatih ketangkasan, dan membuat saya jauh lebih aktif."
+                            </p>
+                            <span class="block mt-3 text-xs font-bold text-sky-600 uppercase tracking-widest">— Kalya Cahyani Salsabilah</span>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            Bermain badminton memberikan kombinasi sempurna antara kesenangan dan kebugaran tubuh. Setiap gerakan di lapangan melatih ketangkasan refleks, menjaga stamina tubuh agar tetap sehat, sekaligus menjadi peluap stres yang sangat menyenangkan.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-smile-wink"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">Menyenangkan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blush-100 text-blush-500 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-heart-pulse"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">Menjaga Kesehatan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">Melatih Ketangkasan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-fire-flame-curved"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">Lebih Aktif</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 Reasons Section -->
+    <section id="reasons" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 text-sky-700 text-xs font-bold uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-sparkles"></i> Manfaat Utama
+                </div>
+                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-slate-800">
+                    4 Pilar Semangat Badminton Kalya
+                </h2>
+                <p class="text-slate-600 mt-2 text-sm">
+                    Inilah alasan mengapa olahraga badminton sangat memikat hati Kalya.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1: Menyenangkan -->
+                <div class="glass-card p-6 rounded-3xl shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between group" data-tilt data-tilt-max="10">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-400 to-sky-300 text-white flex items-center justify-center text-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-face-smile-beam"></i>
+                        </div>
+                        <h3 class="heading-font text-xl font-bold text-slate-800 mb-2 group-hover:text-sky-600 transition-colors">
+                            1. Menyenangkan
+                        </h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            Bermain badminton selalu diwarnai tawa dan keceriaan. Reli shuttlecock yang seru dapat menyegarkan pikiran seketika.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-sky-100 text-[11px] font-bold text-sky-500">
+                        ✨ Mood Booster Terbaik
+                    </div>
+                </div>
+
+                <!-- Card 2: Menjaga Kesehatan -->
+                <div class="glass-card p-6 rounded-3xl shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between group" data-tilt data-tilt-max="10">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blush-400 to-blush-300 text-white flex items-center justify-center text-2xl mb-6 shadow-pink-glow group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3 class="heading-font text-xl font-bold text-slate-800 mb-2 group-hover:text-blush-500 transition-colors">
+                            2. Menjaga Kesehatan
+                        </h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            Latihan kardio menyeluruh yang melatih daya tahan jantung, membakar kalori, serta menjaga kebugaran stamina tubuh.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-blush-100 text-[11px] font-bold text-blush-500">
+                        💖 Tubuh Fit & Bugar
+                    </div>
+                </div>
+
+                <!-- Card 3: Melatih Ketangkasan -->
+                <div class="glass-card p-6 rounded-3xl shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between group" data-tilt data-tilt-max="10">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-400 to-blush-300 text-white flex items-center justify-center text-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-person-running"></i>
+                        </div>
+                        <h3 class="heading-font text-xl font-bold text-slate-800 mb-2 group-hover:text-purple-600 transition-colors">
+                            3. Melatih Ketangkasan
+                        </h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            Kecepatan laju shuttlecock mengasah koordinasi mata, kecepatan reaksi tangan, serta kelincahan footwork di lapangan.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-purple-100 text-[11px] font-bold text-purple-500">
+                        ⚡ Refleks Cepat
+                    </div>
+                </div>
+
+                <!-- Card 4: Lebih Aktif -->
+                <div class="glass-card p-6 rounded-3xl shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between group" data-tilt data-tilt-max="10">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-400 to-emerald-300 text-white flex items-center justify-center text-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <h3 class="heading-font text-xl font-bold text-slate-800 mb-2 group-hover:text-emerald-600 transition-colors">
+                            4. Lebih Aktif
+                        </h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            Mendorong gaya hidup dinamis, mencegah kebiasaan malas bergerak, dan memberi suntikan energi positif setiap hari.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-100 text-[11px] font-bold text-emerald-600">
+                        🌿 Gaya Hidup Produktif
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Game Section -->
+    <section id="game" class="py-20 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card p-6 sm:p-10 rounded-3xl shadow-soft-3d border border-white text-center">
+                
+                <div class="max-w-xl mx-auto mb-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blush-100 text-blush-500 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-gamepad"></i> Mini Game Interaktif
+                    </div>
+                    <h2 class="heading-font text-3xl font-bold text-slate-800">
+                        Ketangkasan Shuttlecock Bounce!
+                    </h2>
+                    <p class="text-slate-600 text-xs mt-2">
+                        Uji refleks ketangkasanmu! Ketuk atau klik Shuttlecock melayang sebelum berpindah tempat.
+                    </p>
+                </div>
+
+                <!-- Arena Canvas Container -->
+                <div class="relative w-full h-80 rounded-3xl overflow-hidden bg-gradient-to-b from-sky-100 via-blush-50 to-purple-50 border-2 border-white shadow-inner flex flex-col justify-between p-4 cursor-pointer select-none" id="game-arena">
+                    
+                    <!-- HUD Score Board -->
+                    <div class="flex justify-between items-center z-10">
+                        <div class="glass-card px-4 py-1.5 rounded-xl text-xs font-bold text-slate-700">
+                            Skor: <span id="game-score" class="text-sky-600 text-sm font-extrabold ml-1">0</span>
+                        </div>
+                        <div class="glass-card px-4 py-1.5 rounded-xl text-xs font-bold text-slate-700">
+                            Rekor: <span id="game-highscore" class="text-blush-500 text-sm font-extrabold ml-1">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Pure CSS Court Line Decorations -->
+                    <div class="absolute inset-0 pointer-events-none opacity-20 flex flex-col justify-between p-6">
+                        <div class="w-full h-full border-2 border-slate-400 rounded-lg flex flex-col justify-between">
+                            <div class="w-full h-1/2 border-b-2 border-slate-400"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating CSS Target Shuttlecock -->
+                    <div id="shuttlecock-target" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-100 cursor-pointer z-20">
+                        <div class="w-16 h-16 glass-card rounded-full p-2 shadow-pink-glow flex items-center justify-center animate-bounce">
+                            <svg viewBox="0 0 100 100" class="w-full h-full pointer-events-none drop-shadow-sm">
+                                <path d="M50,15 L32,60 L68,60 Z" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linejoin="round"/>
+                                <path d="M36,50 L64,50 M39,40 L61,40 M42,30 L58,30" stroke="#7dd3fc" stroke-width="4"/>
+                                <circle cx="50" cy="74" r="13" fill="#fb7185"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Game Overlay Modal -->
+                    <div id="game-overlay" class="absolute inset-0 bg-slate-900/30 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-white rounded-3xl">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-400 to-blush-300 flex items-center justify-center text-xl mb-3 shadow-md">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <h3 class="heading-font text-xl font-bold mb-1">Mulai Uji Ketangkasan</h3>
+                        <p class="text-xs text-sky-100 max-w-xs mb-4">Klik shuttlecock secepat mungkin untuk menambah poin ketangkasan Kalya!</p>
+                        <button id="start-game-btn" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-sky-400 via-blush-300 to-blush-400 text-white font-bold text-xs shadow-soft-3d hover:scale-105 transition-transform">
+                            Mulai Permaianan
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blush-100 text-blush-500 text-xs font-bold uppercase tracking-wider mb-2">
+                    <i class="fa-solid fa-journal-whills"></i> Catatan Kalya
+                </div>
+                <h2 class="heading-font text-3xl font-bold text-slate-800">
+                    Artikel & Tip Badminton
+                </h2>
+                <p class="text-slate-600 text-xs mt-2">
+                    Berbagi cerita seputar rutinitas badminton dan menjaga kesehatan tubuh.
+                </p>
+            </div>
+
+            <!-- Blog Articles Grid (Pure CSS Graphic Header - No Images) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Article 1 -->
+                <article class="glass-card rounded-3xl overflow-hidden shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Pure CSS Graphic Header -->
+                        <div class="h-44 bg-gradient-to-tr from-sky-200 via-blush-100 to-sky-100 p-6 flex flex-col justify-between relative overflow-hidden">
+                            <span class="self-start bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-sky-600">Tips & Trik</span>
+                            <div class="text-right text-4xl text-sky-400/50">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                            <h4 class="heading-font text-lg font-bold text-slate-800 relative z-10">Pemanasan Penting</h4>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-600 text-xs leading-relaxed line-clamp-3 mb-4">
+                                Lakukan peregangan dinamis dan footwork ringan selama 5 menit sebelum bermain untuk mencegah cedera ankle serta otot gelang tangan...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button onclick="openModal(0)" class="w-full py-2.5 rounded-xl bg-sky-50 text-sky-600 font-bold text-xs hover:bg-sky-400 hover:text-white transition-colors">
+                            Baca Selengkapnya
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="glass-card rounded-3xl overflow-hidden shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Pure CSS Graphic Header -->
+                        <div class="h-44 bg-gradient-to-tr from-blush-200 via-purple-100 to-blush-100 p-6 flex flex-col justify-between relative overflow-hidden">
+                            <span class="self-start bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-blush-500">Peralatan</span>
+                            <div class="text-right text-4xl text-blush-300/60">
+                                <i class="fa-solid fa-feather"></i>
+                            </div>
+                            <h4 class="heading-font text-lg font-bold text-slate-800 relative z-10">Memilih Grip & Raket</h4>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-600 text-xs leading-relaxed line-clamp-3 mb-4">
+                                Gunakan raket berbobot ringan (4U) dengan gip kain/karet yang nyaman di tangan agar pukulan terasa lebih presisi tanpa membuat cepat lelah...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button onclick="openModal(1)" class="w-full py-2.5 rounded-xl bg-blush-50 text-blush-500 font-bold text-xs hover:bg-blush-400 hover:text-white transition-colors">
+                            Baca Selengkapnya
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="glass-card rounded-3xl overflow-hidden shadow-soft-3d hover:shadow-soft-3d-hover transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Pure CSS Graphic Header -->
+                        <div class="h-44 bg-gradient-to-tr from-purple-200 via-sky-100 to-purple-100 p-6 flex flex-col justify-between relative overflow-hidden">
+                            <span class="self-start bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-purple-600">Gaya Hidup</span>
+                            <div class="text-right text-4xl text-purple-300/60">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <h4 class="heading-font text-lg font-bold text-slate-800 relative z-10">Kebugaran Sepanjang Hari</h4>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-600 text-xs leading-relaxed line-clamp-3 mb-4">
+                                Perpaduan latihan badminton teratur, asupan air putih yang cukup, serta istirahat berkualitas yang membuat hari-hari Kalya senantiasa produktif...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button onclick="openModal(2)" class="w-full py-2.5 rounded-xl bg-purple-50 text-purple-600 font-bold text-xs hover:bg-purple-400 hover:text-white transition-colors">
+                            Baca Selengkapnya
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram & Social CTA Section -->
+    <section class="py-16 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl shadow-soft-3d border border-white bg-gradient-to-tr from-white/90 via-blush-50/80 to-sky-50/90">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-400 to-blush-400 text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-pink-glow">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+                <h2 class="heading-font text-3xl font-bold text-slate-800 mb-2">
+                    Mari Berteman di Instagram!
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-sm max-w-md mx-auto mb-6">
+                    Ikuti keseharian Kalya Cahyani, postingan estetis, serta cerita badminton menarik lainnya di Instagram.
+                </p>
+
+                <!-- Instagram CTA Button -->
+                <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-sky-400 via-blush-300 to-blush-400 text-white font-bold text-sm shadow-soft-3d hover:shadow-soft-3d-hover hover:scale-105 transition-all duration-300">
+                    <i class="fa-brands fa-instagram text-lg"></i> Follow @kaly4a4
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 border-t border-blush-100 py-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="heading-font text-xl font-bold bg-gradient-to-r from-sky-600 via-blush-400 to-blush-500 bg-clip-text text-transparent mb-2">
+                Kalya Cahyani Salsabilah
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Badminton Personal Aesthetic Blog</p>
+            
+            <div class="flex justify-center space-x-3 mb-6">
+                <a href="https://www.instagram.com/kaly4a4?stkn=MWk4Y29yMTNvb201cQ==" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-blush-400 hover:bg-blush-400 hover:text-white transition-colors">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+
+            <p class="text-[11px] text-slate-400">
+                © 2026 Kalya Cahyani Salsabilah. Didesain dengan <i class="fa-solid fa-heart text-blush-400"></i> & Sentuhan Soft Pastel.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Reading Modal -->
+    <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+        <div class="glass-card bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 relative border border-white">
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-blush-50 text-blush-500 font-bold flex items-center justify-center">✕</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        /* Typewriter Logic */
+        const phrases = [
+            "Pencinta Olahraga Badminton 🏸",
+            "Suka Gaya Hidup Aktif & Sehat ✨",
+            "Melatih Ketangkasan Refleks 🌸"
+        ];
+        let pIndex = 0, cIndex = 0, isDeleting = false;
+        const typewriterEl = document.getElementById('typewriter-text');
+
+        function typeWriter() {
+            const current = phrases[pIndex];
+            typewriterEl.textContent = isDeleting 
+                ? current.substring(0, cIndex - 1) 
+                : current.substring(0, cIndex + 1);
+
+            cIndex += isDeleting ? -1 : 1;
+            let speed = isDeleting ? 30 : 70;
+
+            if (!isDeleting && cIndex === current.length) {
+                speed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && cIndex === 0) {
+                isDeleting = false;
+                pIndex = (pIndex + 1) % phrases.length;
+                speed = 400;
+            }
+
+            setTimeout(typeWriter, speed);
+        }
+
+        /* Mobile Menu Navigation Toggle */
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.querySelectorAll('.mobile-link').forEach(l => {
+            l.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        /* Audio Tone Handler */
+        function playBounceSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(520, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.4, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.12);
+            } catch(e){}
+        }
+
+        /* Shuttlecock Bounce Challenge Game Logic */
+        let gameScore = 0, gameHighscore = 0, isGameRunning = false, gameInterval = null;
+        const arena = document.getElementById('game-arena');
+        const target = document.getElementById('shuttlecock-target');
+        const scoreEl = document.getElementById('game-score');
+        const highscoreEl = document.getElementById('game-highscore');
+        const overlay = document.getElementById('game-overlay');
+
+        function moveShuttlecock() {
+            if (!isGameRunning) return;
+            const arenaRect = arena.getBoundingClientRect();
+            const maxX = arenaRect.width - 80;
+            const maxY = arenaRect.height - 80;
+
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(40, Math.floor(Math.random() * maxY));
+
+            target.style.left = `${randomX}px`;
+            target.style.top = `${randomY}px`;
+            target.style.transform = 'none';
+        }
+
+        document.getElementById('start-game-btn').addEventListener('click', () => {
+            gameScore = 0;
+            scoreEl.textContent = '0';
+            isGameRunning = true;
+            overlay.classList.add('hidden');
+            moveShuttlecock();
+
+            clearInterval(gameInterval);
+            gameInterval = setInterval(() => {
+                if (isGameRunning) moveShuttlecock();
+            }, 1100);
+        });
+
+        target.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isGameRunning) return;
+
+            playBounceSound();
+            gameScore++;
+            scoreEl.textContent = gameScore;
+
+            if (gameScore > gameHighscore) {
+                gameHighscore = gameScore;
+                highscoreEl.textContent = gameHighscore;
+            }
+
+            if (gameScore % 10 === 0 && typeof confetti === 'function') {
+                confetti({ particleCount: 35, spread: 50, origin: { y: 0.7 } });
+            }
+
+            moveShuttlecock();
+        });
+
+        /* Modal Data */
+        const articles = [
+            {
+                title: "Pemanasan Penting Sebelum Badminton",
+                content: "Lakukan peregangan dinamis seperti leg swings dan putaran lengan selama 5 menit sebelum mengayunkan raket untuk menjaga kelenturan otot serta mencegah cedera ankle."
+            },
+            {
+                title: "Memilih Grip & Raket Nyaman",
+                content: "Bagi pemula, pilihlah raket ringan berbobot 4U dengan grip berbahan lembut agar ayunan terasa responsif dan tangan tidak mudah lelah."
+            },
+            {
+                title: "Kebugaran Sepanjang Hari",
+                content: "Padukan olahraga badminton secara teratur dengan konsumsi air putih yang cukup serta tidur berkualitas agar energi positif tetap terpancar setiap hari."
+            }
+        ];
+
+        function openModal(idx) {
+            const item = articles[idx];
+            document.getElementById('modal-body').innerHTML = `
+                <h3 class="heading-font text-2xl font-bold text-slate-800 mb-3">${item.title}</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">${item.content}</p>
+            `;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            typeWriter();
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
+            }
+        };
+    </script>
+</body>
+</html>
